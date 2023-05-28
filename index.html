@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/pokemon.png" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/index.css" />
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Angular Lib -->
+    <script src="./libs/angular.min.js"></script>
+
+    <script>
+        let pokemonApp = angular.module("pokemonApp", []);
+
+        pokemonApp.filter('titleCase', function () {
+            return function (input) {
+                input = input || '';
+                return input.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+            };
+        });
+
+
+        pokemonApp.controller("searchController", ($scope, $http) => {
+
+            $scope.searchPokemon = function () {
+                $http.get(`https://pokeapi.co/api/v2/pokemon/${$scope.pokemonName.toLowerCase()}/`).then(resp => {
+                    console.log(resp.data);
+                    $scope.name = resp.data.name;
+                    $scope.height = resp.data.height;
+                    $scope.baseExperience = resp.data.base_experience;
+                    $scope.abilities = resp.data.abilities;
+                    $scope.weight = resp.data.weight;
+                    $scope.isVisible = true;
+                }, resp => {
+                    $scope.isException = true;
+                    $scope.isVisible = false;
+                });
+            };
+
+            $scope.disableBox = function () {
+                $scope.isException = false;
+            };
+        });
+
+
+        pokemonApp.controller("allDataController", ($scope, $http) => {
+
+            $scope.className = "pokemonsPage";
+
+            $http.get(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=3`).then(resp => {
+                console.log(resp.data);
+                $scope.results = resp.data.results;
+                $scope.arr = [];
+
+                for(result in $scope.results) {
+                    $http.get($scope.results[result].url).then(resp => {
+                        $scope.arr.push(resp.data);
+                    });
+                }
+
+                console.log($scope.arr);
+
+                $scope.nextPage = () => {
+                    $scope.className = "animate";
+                    $scope.nextArr = [];
+                    
+                    $http.get(resp.data.next).then(response => {
+                        console.log(response.data);
+                        console.log(response.data.results);
+                        for(item in response.data.results) {
+                            $http.get(response.data.results[item].url).then(res => {
+                                console.log(res.data);
+                                $scope.nextArr.push(res.data);
+                            });
+                        }
+                    });
+                    $scope.arr = $scope.nextArr;
+                    console.log("nextArr: " + $scope.nextArr);
+                    console.log("arr: " + $scope.arr);
+
+                    for(ele in $scope.nextArr) {
+                        console.log("ele" + $scope.nextArr[ele]);
+                    }
+                };
+            });
+        });
+    </script>
+
+    <title>Pokemon</title>
+</head>
+
+<body ng-app="pokemonApp" style="background-color: #222725;">
+
+    <div class="logo">
+        <img src="./images/logo.png" alt="Loading..." class="logoImg">
+    </div>
+
+    <div ng-controller="searchController">
+
+        <div class="search">
+            <input type="text" class="bar" ng-model="pokemonName" ng-click="disableBox();" />
+            <input type="button" value="Search" class="searchButton" ng-click="searchPokemon();" />
+        </div>
+
+        <div class="exception" ng-show="isException">
+            <p class="exceptionText">No Match Found</p>
+        </div>
+
+        <div class="card" ng-show="isVisible">
+            <div class="cardTitleDiv">
+                <h3 class="cardTitle text1">{{ name | titleCase }}</h3>
+            </div>
+            <div class="cardBodyDiv">
+                <img src="./images/logo.png" alt="Loading..." class="cardImg" />
+                <div>
+                    <ul>
+                        <li class="text4">Height : {{ height }}</li>
+                        <li class="text4">Base Experience : {{ baseExperience }}</li>
+                        <li class="text4">Abilities : <span ng-repeat="ele in abilities">{{ ele.ability.name
+                                }},&nbsp</span></li>
+                        <li class="text4">Weight : {{ weight }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div ng-controller="allDataController" >
+
+        <div ng-class="className">
+        <div class="cardHorizontal" ng-repeat="ele in arr">
+            <div class="cardTitleDiv">
+                <h3 class="cardTitle text1"><span class="cardHorizontalTitle">{{ele.name}}</span></h3>
+            </div>
+            <div class="cardHorizontalImageDiv">
+                <img src="./images/logo.png" alt="Loading..." class="cardHorizontalImg" />
+            </div>
+            <div class="cardHorizontalBody">
+                <ul class="ulList">
+                    <li class="text4 liItem"><span class="liText">Height : {{ ele.height }}</span></li>
+                    <li class="text4 liItem"><span class="liText">Base Experience : {{ ele.base_experience }}</span></li>
+                    <li class="text4 liItem"><span class="liText">Ablities : <span ng-repeat="ability in ele.abilities">{{ability.ability.name}},&nbsp</span></li>
+                    <li class="text4 liItem"><span class="liText">Weight : {{ ele.weight }}</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+        <div class="btnDiv">
+            <input type="button" value="Next" class="searchButton text3" ng-click="nextPage();">
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<!-- 
+    Theme:
+    Background color: #222725
+    Component color: #6f2dbd 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    Font:
+    font-family: 'Prompt', sans-serif;
+
+    <a target="_blank" href="https://icons8.com/icon/16461/pokemon">Pokemon</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+ -->

@@ -1,0 +1,195 @@
+
+.logo {
+    width: 450px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logoImg {
+    width: 400px;
+}
+
+.search {
+    background-color: #6f2dbd;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    width: 600px;
+    height: 33px;
+    border: 3px solid white;
+    border-radius: 7px;
+}
+
+.bar {
+    width: 500px;
+    height: 27px;
+    border: none;
+    font-family: 'Prompt', sans-serif;
+    font-size: 15px;
+}
+
+.searchButton {
+    width: 86px;
+    height: 33px;
+    border: none;
+    background-color: #6f2dbd;
+    color: white;
+    font-family: 'Prompt', sans-serif;
+    font-size: 15px;
+}
+
+.exception {
+    width: 600px;
+    height: 50px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border: 3px solid white;
+    border-radius: 3px;
+    font-family: 'Prompt', sans-serif;
+    font-size: 20px;
+}
+
+.exceptionText {
+    text-align: center;
+    margin-top: 8px;
+}
+
+.card {
+    background-color: white;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    border: 3px solid #6f2dbd;
+    border-radius: 7px;
+    box-shadow: 0 4px 8px 0 rgba(169, 135, 223, 0.2), 0 6px 20px 0 rgba(150, 89, 219, 0.19);
+}
+
+.cardTitleDiv {
+    background-color: #6f2dbd;
+    width: 100%;
+}
+
+.cardTitle {
+    text-align: center;
+    margin-top: 0px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    color: white;
+}
+
+.text1, .text2, .text3, .text4, .text5 {
+    font-family: 'Prompt', sans-serif;
+} 
+
+.text1 {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.text2 {
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.text3 {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.text4 {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.cardBodyDiv {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 20px;
+}
+
+.cardImg {
+    width: 250px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.pokemonsPage, .animate {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.animate {
+    transition: all linear 1s;
+}
+
+.cardHorizontal {
+    width: auto;
+    background-color: white;
+    border: 2px solid #6f2dbd;
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 8px 0 rgba(169, 135, 223, 0.2), 0 6px 20px 0 rgba(150, 89, 219, 0.19);
+}
+
+.cardHorizontalImg {
+    width: 200px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.cardHorizontalBody {
+    width: 100%;
+}
+
+.ulList {
+    padding-left: 0px;
+}
+
+.liItem {
+    height: 40px;
+    background-color: #eae2b7;
+    text-align: center;
+    /* border-top: 0.5px solid #575a5e;
+    border-bottom: 0.5px solid #575a5e; */
+    margin-top: 7px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.liText {
+    display: block;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.cardHorizontalTitle {
+    display: block;
+    margin-top: 15px;
+}
+
+.btnDiv {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.btnDiv input {
+    width: 400px;
+    border-radius: 5px;
+}
+
+.searchButton:hover {
+    background-color: rgb(130, 77, 255);
+}
